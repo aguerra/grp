@@ -9,7 +9,7 @@ variables:
 
 - GRP_PORT: port to listen. Default: 2083.
 
-- GRP_CA_FILE: CA ceritifcate file. Default: ca.crt.
+- GRP_CA_FILE: CA certificate file. Default: ca.crt.
 
 - GRP_CERT_FILE: server certificate file. Default: server.crt.
 
