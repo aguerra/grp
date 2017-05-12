@@ -43,4 +43,4 @@ $ grp
 
 ## Note
 
-Only tested with Golang 1.7.5 on Linux.
+Only tested with Golang 1.7 on Linux.
