@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"strconv"
+	"time"
 
 	"github.com/aguerra/grp/radius"
 )
@@ -44,11 +45,26 @@ func (srv *Server) ListenAndServe() error {
 	if fn := testHookListenAndServe; fn != nil {
 		fn(srv, ln)
 	}
+	var tempDelay time.Duration
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
 			if ne, ok := err.(net.Error); ok && ne.Temporary() {
-				log.Printf("Error=%s\n", err)
+				// Taken from net/http server
+				if tempDelay == 0 {
+					tempDelay = 5 * time.Millisecond
+				} else {
+					tempDelay *= 2
+				}
+				if max := 1 * time.Second; tempDelay > max {
+					tempDelay = max
+				}
+				log.Printf(
+					"Accept error: %v; retrying in %v",
+					err,
+					tempDelay,
+				)
+				time.Sleep(tempDelay)
 				continue
 			}
 			return err
