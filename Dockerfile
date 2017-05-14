@@ -4,7 +4,7 @@ RUN mkdir -p /go/src/github.com/aguerra/grp
 WORKDIR /go/src/github.com/aguerra/grp
 COPY . /go/src/github.com/aguerra/grp
 
-RUN go install .
+RUN make install
 
 ENTRYPOINT ["grp"]
 EXPOSE 2083/tcp

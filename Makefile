@@ -1,4 +1,4 @@
 VERSION=v0.1.0
 
-build:
-	@go build -ldflags="-X main.version=$(VERSION)"  .
+install:
+	@go install -ldflags="-X main.version=$(VERSION)" .
