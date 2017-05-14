@@ -27,18 +27,17 @@ variables:
 
 - GRP_IDLE_TIMEOUT: idle timeout for the TLS connection. Default: 60s.
 
-## Build
+## Install
 
 ```bash
-$ go build .
+$ make install
 ```
 
 ## Usage
 
-No flags, just type grp:
-
-```bash
-$ grp
+```
+Usage of grp:
+  -v    Show version
 ```
 
 ## Note
