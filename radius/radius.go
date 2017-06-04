@@ -5,11 +5,12 @@ import (
 	"bytes"
 	"encoding/binary"
 	"io"
-	"log"
 	"net"
 	"strconv"
 	"time"
 	"unsafe"
+
+	log "github.com/inconshreveable/log15"
 )
 
 const (
@@ -134,32 +135,20 @@ func (h *Handler) Handle(conn net.Conn) {
 	for {
 		p, err := NewPacket(r)
 		if err != nil {
-			log.Printf("Error=%s raddr=%s\n", err, raddr)
+			log.Error("reading", "err", err, "raddr", raddr)
 			return
 		}
 		conn.SetDeadline(time.Now().Add(h.conf.IdleTimeout))
-		log.Printf(
-			"Got packet code=%d ident=%d size=%d raddr=%s\n",
-			p.Code,
-			p.Identifier,
-			p.Length,
-			raddr,
-		)
+		log.Debug("packet", "header", p.Header, "raddr", raddr)
 		go func() {
 			resp, err := h.Dispatch(p)
 			if err != nil {
-				log.Printf("Error=%s raddr=%s\n", err, raddr)
+				log.Error("dispatching", "err", err, "raddr", raddr)
 				return
 			}
-			log.Printf(
-				"Got resp code=%d ident=%d size=%d raddr=%s\n",
-				resp.Code,
-				resp.Identifier,
-				resp.Length,
-				raddr,
-			)
+			log.Debug("response", "header", resp.Header, "raddr", raddr)
 			if _, err := resp.WriteTo(conn); err != nil {
-				log.Printf("Error=%s raddr=%s\n", err, raddr)
+				log.Error("writing", "err", err, "raddr", raddr)
 				return
 			}
 			conn.SetDeadline(time.Now().Add(h.conf.IdleTimeout))

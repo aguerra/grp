@@ -4,12 +4,12 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"io/ioutil"
-	"log"
 	"net"
 	"strconv"
 	"time"
 
 	"github.com/aguerra/grp/radius"
+	log "github.com/inconshreveable/log15"
 )
 
 var testHookListenAndServe func(*Server, net.Listener) // used if non-nil
@@ -59,11 +59,7 @@ func (srv *Server) ListenAndServe() error {
 				if max := 1 * time.Second; tempDelay > max {
 					tempDelay = max
 				}
-				log.Printf(
-					"Accept error: %v; retrying in %v",
-					err,
-					tempDelay,
-				)
+				log.Warn("accepting", "err", err, "delay", tempDelay)
 				time.Sleep(tempDelay)
 				continue
 			}
