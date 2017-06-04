@@ -4,9 +4,43 @@
 	"GodepVersion": "v79",
 	"Deps": [
 		{
+			"ImportPath": "github.com/go-stack/stack",
+			"Comment": "v1.5.3",
+			"Rev": "7a2f19628aabfe68f0766b59e74d6315f8347d22"
+		},
+		{
+			"ImportPath": "github.com/inconshreveable/log15",
+			"Comment": "v2.3-92-g39bacc2",
+			"Rev": "39bacc234bf1afd0b68573e95b45871f67ba2cd4"
+		},
+		{
+			"ImportPath": "github.com/inconshreveable/log15/ext",
+			"Comment": "v2.3-92-g39bacc2",
+			"Rev": "39bacc234bf1afd0b68573e95b45871f67ba2cd4"
+		},
+		{
+			"ImportPath": "github.com/inconshreveable/log15/term",
+			"Comment": "v2.3-92-g39bacc2",
+			"Rev": "39bacc234bf1afd0b68573e95b45871f67ba2cd4"
+		},
+		{
 			"ImportPath": "github.com/kelseyhightower/envconfig",
 			"Comment": "v1.3.0-3-g8bf4bbf",
 			"Rev": "8bf4bbfc795e2c7c8a5ea47b707453ed019e2ad4"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Comment": "v0.0.7-24-gded68f7",
+			"Rev": "ded68f7a9561c023e790de24279db7ebf473ea80"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Comment": "v0.0.2",
+			"Rev": "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "b90f89a1e7a9c1f6b918820b3daa7f08488c8594"
 		}
 	]
 }
