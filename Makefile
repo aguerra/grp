@@ -1,4 +1,4 @@
-VERSION=v0.1.0
+VERSION=latest
 
 install:
 	@go install -ldflags="-X main.version=$(VERSION)" .
