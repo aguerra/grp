@@ -135,7 +135,7 @@ func (h *Handler) Handle(conn net.Conn) {
 	for {
 		p, err := NewPacket(r)
 		if err != nil {
-			log.Error("reading", "err", err, "raddr", raddr)
+			log.Error("failed to read packet", "err", err, "raddr", raddr)
 			return
 		}
 		conn.SetDeadline(time.Now().Add(h.conf.IdleTimeout))
@@ -143,12 +143,12 @@ func (h *Handler) Handle(conn net.Conn) {
 		go func() {
 			resp, err := h.Dispatch(p)
 			if err != nil {
-				log.Error("dispatching", "err", err, "raddr", raddr)
+				log.Error("failed to dispatch packet", "err", err, "raddr", raddr)
 				return
 			}
 			log.Debug("response", "header", resp.Header, "raddr", raddr)
 			if _, err := resp.WriteTo(conn); err != nil {
-				log.Error("writing", "err", err, "raddr", raddr)
+				log.Error("failed to write packet", "err", err, "raddr", raddr)
 				return
 			}
 			conn.SetDeadline(time.Now().Add(h.conf.IdleTimeout))

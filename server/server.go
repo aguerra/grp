@@ -59,7 +59,7 @@ func (srv *Server) ListenAndServe() error {
 				if max := 1 * time.Second; tempDelay > max {
 					tempDelay = max
 				}
-				log.Warn("accepting", "err", err, "delay", tempDelay)
+				log.Warn("failed to accept conn", "err", err, "delay", tempDelay)
 				time.Sleep(tempDelay)
 				continue
 			}

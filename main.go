@@ -28,8 +28,8 @@ func main() {
 	}
 	var conf server.ServerConfig
 	if err := envconfig.Process("grp", &conf); err != nil {
-		log.Crit("loading env", "err", err)
+		log.Crit("failed to load env", "err", err)
 	}
 	srv := server.New(&conf)
-	log.Crit("exiting", "err", srv.ListenAndServe())
+	log.Crit("grp exited", "err", srv.ListenAndServe())
 }
