@@ -85,10 +85,11 @@ func (srv *Server) newTLSConfig() (*tls.Config, error) {
 	caPool := x509.NewCertPool()
 	caPool.AppendCertsFromPEM(ca)
 	tls := &tls.Config{
-		ClientAuth:   tls.RequireAndVerifyClientCert,
-		ClientCAs:    caPool,
-		MinVersion:   tls.VersionTLS12,
-		Certificates: []tls.Certificate{cert},
+		ClientAuth:         tls.RequireAndVerifyClientCert,
+		ClientCAs:          caPool,
+		MinVersion:         tls.VersionTLS12,
+		Certificates:       []tls.Certificate{cert},
+		GetConfigForClient: debugClientConfig,
 	}
 	return tls, nil
 }
@@ -96,4 +97,11 @@ func (srv *Server) newTLSConfig() (*tls.Config, error) {
 func New(conf *ServerConfig) *Server {
 	h := radius.NewHandler(&conf.RadiusConfig)
 	return &Server{conf: conf, Handler: h}
+}
+
+func debugClientConfig(info *tls.ClientHelloInfo) (*tls.Config, error) {
+	log.Println("Client supported tls versions:", info.SupportedVersions)
+	log.Println("Client cipher suites:", info.CipherSuites)
+	log.Println("Client supported curves:", info.SupportedCurves)
+	return nil, nil
 }
