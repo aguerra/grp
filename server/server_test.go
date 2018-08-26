@@ -23,7 +23,7 @@ func (h *FakeHandler) Handle(conn net.Conn) {
 
 func newTestServer() *Server {
 	conf := &ServerConfig{
-		Port:     0,
+		Port:     2112,
 		CertFile: "testdata/server.crt",
 		KeyFile:  "testdata/server.key",
 		CaFile:   "testdata/ca.crt",
@@ -66,7 +66,7 @@ func TestListenAndServe(t *testing.T) {
 	}
 	certFile := "testdata/client.crt"
 	keyFile := "testdata/client.key"
-	conn, err := newConn(keyFile, certFile, ln.Addr().String())
+	conn, err := newConn(keyFile, certFile, "localhost:2112")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -102,7 +102,7 @@ func TestListenAndServeErrCredentials(t *testing.T) {
 	}
 	certFile := "testdata/client_err.crt"
 	keyFile := "testdata/client_err.key"
-	conn, err := newConn(keyFile, certFile, ln.Addr().String())
+	conn, err := newConn(keyFile, certFile, "localhost:2112")
 	if conn != nil {
 		t.Errorf("Conn = %v; want nil", conn)
 	}
