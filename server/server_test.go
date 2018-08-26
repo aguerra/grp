@@ -21,9 +21,9 @@ func (h *FakeHandler) Handle(conn net.Conn) {
 	}
 }
 
-func newTestServer() *Server {
+func newTestServer(port int) *Server {
 	conf := &ServerConfig{
-		Port:     2112,
+		Port:     port,
 		CertFile: "testdata/server.crt",
 		KeyFile:  "testdata/server.key",
 		CaFile:   "testdata/ca.crt",
@@ -55,7 +55,7 @@ func TestListenAndServe(t *testing.T) {
 	testHookListenAndServe = func(s *Server, l net.Listener) {
 		lnc <- l
 	}
-	srv := newTestServer()
+	srv := newTestServer(5000)
 	go func() { errc <- srv.ListenAndServe() }()
 	select {
 	case err := <-errc:
@@ -66,7 +66,7 @@ func TestListenAndServe(t *testing.T) {
 	}
 	certFile := "testdata/client.crt"
 	keyFile := "testdata/client.key"
-	conn, err := newConn(keyFile, certFile, "localhost:2112")
+	conn, err := newConn(keyFile, certFile, "localhost:5000")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -91,7 +91,7 @@ func TestListenAndServeErrCredentials(t *testing.T) {
 	testHookListenAndServe = func(s *Server, l net.Listener) {
 		lnc <- l
 	}
-	srv := newTestServer()
+	srv := newTestServer(6000)
 	go func() { errc <- srv.ListenAndServe() }()
 	select {
 	case err := <-errc:
@@ -102,7 +102,7 @@ func TestListenAndServeErrCredentials(t *testing.T) {
 	}
 	certFile := "testdata/client_err.crt"
 	keyFile := "testdata/client_err.key"
-	conn, err := newConn(keyFile, certFile, "localhost:2112")
+	conn, err := newConn(keyFile, certFile, "localhost:6000")
 	if conn != nil {
 		t.Errorf("Conn = %v; want nil", conn)
 	}
