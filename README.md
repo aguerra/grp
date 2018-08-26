@@ -4,7 +4,7 @@
 Grp is a extremely simple radsec proxy written in Golang: it only supports
 forwarding packets incoming from the TLS 1.2 connection to a radius UDP backend.
 It was my first serious Golang program (needs a rewrite...) but the version
-0.1.0 is stable and battle tested serving hundreds of wifi hotspots.
+v0.1.0 is stable and battle tested serving hundreds of wifi hotspots.
 It is well suited for deployment on containers as it keeps itself in the
 foreground, logs to stdout and is configured only through environment
 variables:
